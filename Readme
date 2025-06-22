@@ -1,0 +1,29 @@
+# 🌌 Solar System Simulation
+
+A 3D interactive simulation of the Solar System using **Three.js**, featuring rotating and orbiting celestial bodies, realistic textures, and smooth camera controls. This project demonstrates the use of WebGL through Three.js for educational and visual storytelling.
+
+---
+
+## 🚀 Features
+
+- 🌞 Sun and planets rendered with high-quality textures
+- 🌍 Planetary rotation and orbit simulation
+- 🌓 Moon orbiting Earth
+- 🧭 Interactive camera (OrbitControls)
+- 💡 Dynamic lighting from the Sun (PointLight)
+- 📁 Modular code structure for scalability
+- 🎯 Raycasting for interactive object selection — click on planets to get more info or highlight them.
+
+
+---
+
+## 📁 Project Structure
+
+# Group members
+| Name           | Section                 | ID                  |
+|----------------|-------------------------|---------------------|
+| Biruk Dereje   | 1                       | UGR/6190/15         |
+| Milki Legesse  | 2                       | UGR/9040/15         |
+| Tesfa Assefa   | 2                       | UGR/1233/15         |
+| Yitbarek Alemu | 1                       | UGR/7554/15         |
+
