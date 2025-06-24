@@ -2,15 +2,17 @@ import * as THREE from 'three';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js';
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
 import { createSun, createPlanet} from './celestialBodies.js';
+
 const scene = new THREE.Scene();
-let timeLapse = 1; 
+
+let timeLapse = 10; 
 const camera = new THREE.PerspectiveCamera(
   75,
   window.innerWidth / window.innerHeight,
   0.1,
   1000
 );
-const rotatingPlanet = [];
+const orbitGroups = [];
 camera.position.set(0, 0, 400);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
@@ -38,6 +40,7 @@ const ambientLight = new THREE.AmbientLight(0xffffff, 0.3);
 scene.add(ambientLight);
 
 
+
 createSun().then((sun) => {
     scene.add(sun);
  
@@ -52,48 +55,59 @@ createSun().then((sun) => {
 // let us also add a source of light to the scene
 
 const sunLight = new THREE.PointLight(0xffffff, 5, 0);
-
 sunLight.position.set(0, 0, 0);
-createPlanet("Mercury", 200, 'asset/model/mercury.glb', 58.6).then((mercury) => {
+scene.add(sunLight);
+createPlanet("Mercury", 200, 'asset/model/mercury.glb', 58.6).then((mercuryGroup) => {
+    const mercury = mercuryGroup.userData.planet;
     mercury.scale.set(0.08, 0.08, 0.08);
-    // const planetLight = new THREE.PointLight('white', 2, 1000);
-    // planetLight.position.set(mercury.position.x, mercury.position.y, mercury.position.z )
-    scene.add(mercury);
-    rotatingPlanet.push(mercury);
+    const planetLight = new THREE.PointLight('white', 2, 1000);
+    planetLight.position.set(mercury.position.x, mercury.position.y, mercury.position.z );
+    orbitGroups.push(mercuryGroup);
+    scene.add(planetLight);
+    scene.add(mercuryGroup);
     
 });
-createPlanet("Venus", 300, 'asset/model/mercury.glb', 58.6).then((venus) => {
+createPlanet("Venus", 300, 'asset/model/venus.glb', 58.6).then((venusGroup) => {
+    const venus = venusGroup.userData.planet;
     venus.scale.set(0.08, 0.08, 0.08);
-    rotatingPlanet.push(venus);
-    scene.add(venus);
+    const planetLight = new THREE.PointLight('white', 2, 1000);
+    planetLight.position.set(venus.position.x, venus.position.y, venus.position.z );
+    orbitGroups.push(venusGroup);
+    scene.add(planetLight);
+    scene.add(venusGroup);
     
 });
-createPlanet("Earth", 400, 'asset/model/mercury.glb', 58.6).then((earth) => {
+createPlanet("Earth", 400, 'asset/model/earth.glb', 58.6).then((earthGroup) => {
+    const earth = earthGroup.userData.planet;
     earth.scale.set(0.08, 0.08, 0.08);
-    rotatingPlanet.push(earth);
-    scene.add(earth);
+    const planetLight = new THREE.PointLight('white', 5, 1000);
+    planetLight.position.set(earth.position.x, earth.position.y, earth.position.z );
+    orbitGroups.push(earthGroup);
+    scene.add(planetLight);
+    scene.add(earthGroup);
     
 });
-createPlanet("Mars", 500, 'asset/model/mercury.glb', 58.6).then((mars ) => {
+createPlanet("Mars", 500, 'asset/model/mars.glb', 58.6).then((marsGroup) => {
+    const mars = marsGroup.userData.planet;
     mars.scale.set(0.08, 0.08, 0.08);
-    rotatingPlanet.push(mars);
-    scene.add(mars);
+    const planetLight = new THREE.PointLight('white', 2, 1000);
+    planetLight.position.set(mars.position.x, mars.position.y, mars.position.z );
+
+    orbitGroups.push(marsGroup);
+    scene.add(planetLight);
+    scene.add(marsGroup);
+
     
 });
-createPlanet("Jupiter", 600, 'asset/model/mercury.glb', 58.6).then((jupiter) => {
+createPlanet("Jupiter", 600, 'asset/model/jupiter.glb', 58.6).then((jupiterGroup) => {
+    const jupiter = jupiterGroup.userData.planet;
     jupiter.scale.set(0.08, 0.08, 0.08);
-    rotatingPlanet.push(jupiter);
-    scene.add(jupiter);
+    orbitGroups.push(jupiterGroup);
+    const planetLight = new THREE.PointLight('white', 2, 1000);
+    planetLight.position.set(jupiter.position.x, jupiter.position.y, jupiter.position.z );
+    scene.add(jupiterGroup);
+    scene.add(planetLight);
 });
-const tiltInDegrees = 23.5;
-const tiltInRadians = THREE.MathUtils.degToRad(tiltInDegrees);
-
-
-const axis = new THREE.Vector3(0, 0, 0)
-
-
-
-
 
 
 
@@ -112,10 +126,15 @@ function animate() {
   
   requestAnimationFrame(animate);
     // const delta = clock.getDelta();
-    rotatingPlanet.forEach((planet) => {
-        planet.rotation.y += ((2*Math.PI)/(planet.rotationPeriod * 24 * 60 * 60) * (timeLapse)*24 * 60 * 60); // rotation period in seconds
-        planet.rotateX(tiltInRadians);
-    });
+    orbitGroups.forEach((group) => {
+    
+    group.rotation.y += 0.001 * timeLapse;
+
+    // Rotation: spin the planet itself
+    // const planet = group.userData.planet;
+    // const rotationPeriod = planet.rotationPeriod;
+    // planet.rotation.y += ((2 * Math.PI) / (rotationPeriod * 24 * 60 * 60)) * timeLapse * 24 * 60 * 60;
+  });
   controls.update();
   renderer.render(scene, camera);
 }

@@ -1,14 +1,25 @@
 import {GLTFLoader} from 'three/examples/jsm/loaders/GLTFLoader.js';
+const tiltInDegrees = 23.5;
+import * as THREE from 'three';
+const tiltInRadians = THREE.MathUtils.degToRad(tiltInDegrees);
 
 export function createPlanet(name, distanceFromSun, url, rotationPeriod) {
     const loader = new GLTFLoader();
     return new Promise((resolve, reject) => {     
     loader.load(url, (gltf) => {
-        const model = gltf.scene;
-        model.name = name;
-        model.rotationPeriod = rotationPeriod;
-        model.position.set(distanceFromSun + 100, 0, 0);  // added 100 because of the width of the sun
-        resolve(model);
+        const planet = gltf.scene;
+        planet.name = name;
+        planet.rotateX(tiltInRadians); 
+        planet.rotationPeriod = rotationPeriod;
+        const angle = Math.random() * Math.PI * 2;
+        const x = Math.cos(angle) * distanceFromSun;
+        const z = Math.sin(angle) * distanceFromSun;
+        planet.position.set(x, 0, z); // trial to make them seem in a single file
+        const orbitGroup = new THREE.Group();
+        orbitGroup.add(planet);
+        orbitGroup.userData.planet = planet;
+        resolve(orbitGroup);
+
     }, undefined, (error) => {
         console.error(`Error loading celestial body ${name}:`, error);
         reject(error);
