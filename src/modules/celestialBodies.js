@@ -11,7 +11,7 @@ export function createPlanet(name, distanceFromSun, url, rotationPeriod) {
         planet.name = name;
         planet.rotateX(tiltInRadians); 
         planet.rotationPeriod = rotationPeriod;
-        const angle = Math.random() * Math.PI;
+        const angle = Math.random() * Math.PI * 2;
         const x = Math.cos(angle) * distanceFromSun;
         const z = Math.sin(angle) * distanceFromSun;
         planet.position.set(x, 0, z); // trial to make them seem in a single file
