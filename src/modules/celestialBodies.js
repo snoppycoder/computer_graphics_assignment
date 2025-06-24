@@ -7,7 +7,7 @@ export function createPlanet(name, distanceFromSun, url, rotationPeriod) {
         const model = gltf.scene;
         model.name = name;
         model.rotationPeriod = rotationPeriod;
-        model.position.set(distanceFromSun, 0, 0);
+        model.position.set(distanceFromSun + 100, 0, 0);  // added 100 because of the width of the sun
         resolve(model);
     }, undefined, (error) => {
         console.error(`Error loading celestial body ${name}:`, error);
@@ -18,10 +18,10 @@ export function createPlanet(name, distanceFromSun, url, rotationPeriod) {
 export function createSun() {
     const loader = new GLTFLoader();
     return new Promise((resolve, reject) =>{
-        loader.load('../model/sun.glb', (gltf) => {
+        loader.load('asset/model/sun.glb', (gltf) => {
             const model = gltf.scene;
             model.name = 'Sun';
-            model.scale.set(10, 10, 10);
+            model.scale.set(1, 1, 1);
             model.position.set(0, 0, 0);
             resolve(model);
         }, undefined, (error) => {
@@ -30,4 +30,5 @@ export function createSun() {
         
         });
     });
+
 }
