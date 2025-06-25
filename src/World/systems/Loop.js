@@ -23,8 +23,8 @@ class Loop {
 
    tick() {
       const delta = clock.getDelta();
-      for (const object in this.updatables) {
-         object.tick(delta);
+      for (const obj of this.updatables) {
+         obj.tick(delta);
       }
    }
 }

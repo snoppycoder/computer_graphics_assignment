@@ -1,6 +1,7 @@
 import { createCamera } from "./components/camera";
 import { createLights } from "./components/lights";
 import { createScene } from "./components/scene";
+import { SolarSystem } from "./components/SolarSystem/SolarySystem";
 
 import { Loop } from "./systems/Loop";
 import { createOrbitControls } from "./systems/orbitcontrols";
@@ -14,6 +15,14 @@ let loop;
 
 class World {
    constructor(container) {
+      this.setup(container);
+      // Adding the solar system
+      const solarSystem = new SolarSystem();
+      scene.add(solarSystem);
+      loop.updatables.push(solarSystem);
+   }
+
+   setup(container) {
       camera = createCamera();
       scene = createScene();
       renderer = createRenderer();
@@ -21,16 +30,17 @@ class World {
       loop = new Loop(camera, renderer, scene);
 
       // Setting up light from the Sun and ambient lighting
-      const lights = createLights();
-      scene.add(lights.sunPointLight, lights.ambientLight);
+      this.lights = createLights();
+      scene.add(this.lights.sunPointLight, this.lights.ambientLight);
 
       // Setting up orbit controls
-      const orbitControls = createOrbitControls(camera, renderer.domElement);
+      this.orbitControls = createOrbitControls(camera, renderer.domElement);
+      loop.updatables.push(this.orbitControls);
 
       resizer(container, camera, renderer);
 
       // Setting up camera
-      camera.position.set(0, 0, 1000);
+      camera.position.set(0, 0, 300);
       scene.add(camera);
    }
    start() {
