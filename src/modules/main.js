@@ -113,15 +113,91 @@ createPlanet("Jupiter", 600, 'asset/model/jupiter.glb', 58.6).then((jupiterGroup
 createPlanet("Uranus", 700, 'asset/model/uranus.glb', 58.6).then((uranusGroup) => {
     const uranus = uranusGroup.userData.planet;
     uranus.scale.set(0.08, 0.08, 0.08);
+    // Apply Uranus's unique axial tilt (about 98 degrees)
+    uranus.rotation.z = THREE.MathUtils.degToRad(98);
+    // Add rings to Uranus
+    const ringGeometry = new THREE.RingGeometry(0.11, 0.16, 64);
+    const ringMaterial = new THREE.MeshBasicMaterial({
+        color: 0xcccccc,
+        side: THREE.DoubleSide,
+        transparent: true,
+        opacity: 0.5
+    });
+    const ring = new THREE.Mesh(ringGeometry, ringMaterial);
+    ring.rotation.x = Math.PI / 2; // Lay flat
+    ring.position.y = 0.01; // Slightly above the planet
+    uranus.add(ring);
     orbitGroups.push(uranusGroup);
     const planetLight = new THREE.PointLight('white', 2, 1000);
     planetLight.position.set(uranus.position.x, uranus.position.y, uranus.position.z );
     scene.add(uranusGroup);
     scene.add(planetLight);
+    // Store reference for interactivity
+    uranus.userData.isUranus = true;
 });
 
+// Raycaster and info popup for Uranus
+const raycaster = new THREE.Raycaster();
+const mouse = new THREE.Vector2();
 
+function showUranusInfo() {
+    let info = document.getElementById('uranus-info-popup');
+    if (!info) {
+        info = document.createElement('div');
+        info.id = 'uranus-info-popup';
+        info.style.position = 'absolute';
+        info.style.top = '30px';
+        info.style.right = '30px';
+        info.style.background = 'rgba(30,40,60,0.95)';
+        info.style.color = '#fff';
+        info.style.padding = '18px 24px';
+        info.style.borderRadius = '12px';
+        info.style.zIndex = 1000;
+        info.style.fontFamily = 'sans-serif';
+        info.innerHTML = `
+            <h2>Uranus</h2>
+            <ul>
+                <li><b>Distance from Sun:</b> 2.87 billion km</li>
+                <li><b>Diameter:</b> 50,724 km</li>
+                <li><b>Axial Tilt:</b> 98° (rolls on its side!)</li>
+                <li><b>Rings:</b> 13 known faint rings</li>
+                <li><b>Fun Fact:</b> Uranus was the first planet discovered with a telescope.</li>
+            </ul>
+            <button id="close-uranus-info">Close</button>
+        `;
+        document.body.appendChild(info);
+        document.getElementById('close-uranus-info').onclick = () => info.remove();
+    }
+}
 
+function highlightUranus(uranus) {
+    uranus.scale.set(0.11, 0.11, 0.11);
+    setTimeout(() => {
+        uranus.scale.set(0.08, 0.08, 0.08);
+    }, 800);
+}
+
+renderer.domElement.addEventListener('pointerdown', (event) => {
+    mouse.x = (event.clientX / window.innerWidth) * 2 - 1;
+    mouse.y = - (event.clientY / window.innerHeight) * 2 + 1;
+    raycaster.setFromCamera(mouse, camera);
+    // Only check Uranus
+    let uranusMesh = null;
+    for (const group of orbitGroups) {
+        const planet = group.userData.planet;
+        if (planet && planet.userData.isUranus) {
+            uranusMesh = planet;
+            break;
+        }
+    }
+    if (uranusMesh) {
+        const intersects = raycaster.intersectObject(uranusMesh, true);
+        if (intersects.length > 0) {
+            highlightUranus(uranusMesh);
+            showUranusInfo();
+        }
+    }
+});
 
 window.addEventListener('resize', () => {
     camera.aspect = container.clientWidth / container.clientHeight;
