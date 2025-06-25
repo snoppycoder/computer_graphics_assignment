@@ -2,7 +2,7 @@ import { createCamera } from "./components/camera";
 import { createLights } from "./components/lights";
 import { createScene } from "./components/scene";
 import { SolarSystem } from "./components/SolarSystem/SolarySystem";
-
+import { rayCaster } from "./systems/raycaster.js";
 import { Loop } from "./systems/Loop";
 import { createOrbitControls } from "./systems/orbitcontrols";
 import { createRenderer } from "./systems/renderer";
@@ -42,6 +42,8 @@ class World {
       // Setting up camera
       camera.position.set(0, 0, 300);
       scene.add(camera);
+
+      window.addEventListener("click", (event) => {rayCaster(camera, event, scene, this.orbitControls)}, false);
    }
    start() {
       loop.start();

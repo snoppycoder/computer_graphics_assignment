@@ -1,6 +1,6 @@
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 
-function loadModel(url) {
+function loadModel(url, name) {
    const loader = new GLTFLoader();
 
    return new Promise((resolve, reject) => {
@@ -8,6 +8,11 @@ function loadModel(url) {
          url,
          (gltf) => {
             const model = gltf.scene;
+            model.traverse(( child ) => {
+               if (child.isMesh) {
+                  child.name = name; // Set a name for the mesh
+               }
+            });
             resolve(model);
          },
          undefined,
