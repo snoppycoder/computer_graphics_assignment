@@ -22,14 +22,21 @@ class CelestialBody {
 
    tick(delta) {
       if (!this.planet) return;
-      const revPerSecond = MathUtils.degToRad(360 * (this.revPeriod / earthRevPeriod) * secondsPerRev);
-      const x = this.a * Math.cos(this.time);
-      const z = this.b * Math.sin(this.time);
-      this.planet.position.set(x, 0, -z);
-      this.time += revPerSecond * delta;
 
-      const rotPerSecond = MathUtils.degToRad(360 * (this.rotPeriod / earthRotPeriod) * secondsPerRot);
-      this.planet.rotateY(rotPerSecond * delta);
+      // Revolution
+      if (this.revPeriod > 0) {
+         const revPerSecond = MathUtils.degToRad(360 * (earthRevPeriod / this.revPeriod) * secondsPerRev);
+         const x = this.a * Math.cos(this.time);
+         const z = this.b * Math.sin(this.time);
+         this.planet.position.set(x, 0, -z);
+         this.time += revPerSecond * delta;
+      }
+
+      // Rotation
+      if (this.rotPeriod > 0) {
+         const rotPerSecond = MathUtils.degToRad(360 * (earthRotPeriod / this.rotPeriod) * secondsPerRot);
+         this.planet.rotateY(rotPerSecond * delta);
+      }
    }
 }
 
