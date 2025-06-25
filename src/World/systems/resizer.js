@@ -8,14 +8,16 @@ A function that does the following
 */
 
 function resizer(container, camera, renderer) {
-   camera.aspect = container.clientWidth / container.clientHeight;
+   function onResize() {
+
+      camera.aspect = container.clientWidth / container.clientHeight;
    camera.updateProjectionMatrix();
    renderer.setSize(container.clientWidth, container.clientHeight);
    renderer.setPixelRatio(window.devicePixelRatio);
+   }
+   onResize(); 
 
-   window.addEventListener("resize", () => {
-      setSize(container, camera, renderer);
-   });
+   window.addEventListener("resize", onResize);
 }
 
 export { resizer };
