@@ -4,6 +4,8 @@ import { RGBELoader } from "three/examples/jsm/Addons.js";
 function createScene() {
    const scene = new Scene();
    const loader = new RGBELoader();
+
+   // Loads the background image into the scene
    loader.load(
       "../../../assets/hdri/background.hdr",
       (texture) => {
