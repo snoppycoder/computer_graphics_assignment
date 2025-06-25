@@ -1,15 +1,23 @@
+
+
 {
-  "name": "cg-group",
+  "name": "CG-group",
   "version": "1.0.0",
+  "description": "A project using Three.js and GSAP for animations.",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": [
+    "threejs",
+    "gsap"
+   
+  ],
   "author": "",
   "license": "ISC",
-  "description": "",
   "dependencies": {
-    "three": "^0.177.0"
+    "three": "^0.177.0",
+    "gsap": "^3.13.0"
   }
 }
