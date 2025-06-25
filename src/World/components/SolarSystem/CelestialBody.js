@@ -7,9 +7,10 @@ const earthRevPeriod = 31557600; // Revolution period of the Earth in seconds
 const earthRotPeriod = 86164; // Revolution period of the Earth in seconds
 
 class CelestialBody {
-   constructor(url, a, b, revPeriod, rotPeriod, onLoad) {
+   constructor(url, a, b, revPeriod, rotPeriod, obliquity, onLoad) {
       loadModel(url).then((value) => {
          this.planet = value;
+         this.planet.rotation.set(0, 0, MathUtils.degToRad(obliquity));
          if (onLoad) onLoad(this);
       });
       this.a = a; // Major axis distance
