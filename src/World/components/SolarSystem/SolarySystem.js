@@ -15,7 +15,7 @@ class SolarSystem extends Group {
    createBodies() {
       this.bodies = {}; // initialize container
 
-      const sun = new CelestialBody("../../../../assets/models/sun.glb", 0, 0, 0, 0, 0, "sun", (body) => {
+      const sun = new CelestialBody("/assets/models/sun.glb", 0, 0, 0, 0, 0, "sun", (body) => {
          this.add(body.planet);
 
          // Compute scaleFactor using sun's bounding box
