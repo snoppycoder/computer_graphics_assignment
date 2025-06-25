@@ -1,0 +1,21 @@
+import { EquirectangularReflectionMapping, Scene } from "three";
+import { RGBELoader } from "three/examples/jsm/Addons.js";
+
+function createScene() {
+   const scene = new Scene();
+   const loader = new RGBELoader();
+   loader.load(
+      "../../../assets/hdri/background.hdr",
+      (texture) => {
+         texture.mapping = EquirectangularReflectionMapping;
+         scene.background = texture;
+         scene.environment = texture;
+      },
+      null,
+      (error) => {
+         console.log("An error occured while loading the HDR texture", error);
+      }
+   );
+   return scene;
+}
+export { createScene };
