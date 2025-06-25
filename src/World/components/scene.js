@@ -13,7 +13,11 @@ function createScene() {
          scene.background = texture;
          scene.environment = texture;
       },
-      null,
+      (xhr) => {
+         console.log(
+            (xhr.loaded / xhr.total) * 100 + "% loaded"
+         );
+      },
       (error) => {
          console.log("An error occured while loading the HDR texture", error);
       }
