@@ -109,6 +109,17 @@ createPlanet("Jupiter", 600, 'asset/model/jupiter.glb', 58.6).then((jupiterGroup
     scene.add(planetLight);
 });
 
+// Uranus
+createPlanet("Uranus", 700, 'asset/model/uranus.glb', 58.6).then((uranusGroup) => {
+    const uranus = uranusGroup.userData.planet;
+    uranus.scale.set(0.08, 0.08, 0.08);
+    orbitGroups.push(uranusGroup);
+    const planetLight = new THREE.PointLight('white', 2, 1000);
+    planetLight.position.set(uranus.position.x, uranus.position.y, uranus.position.z );
+    scene.add(uranusGroup);
+    scene.add(planetLight);
+});
+
 
 
 
