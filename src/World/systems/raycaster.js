@@ -22,7 +22,7 @@ export function rayCaster(camera, event, scene, controls) {
         //tweeny deprecated or not available so i am using gsap to animate the camera position
         gsap.to(camera.position, {
         x: newPos.x,
-        
+
         y: newPos.y,
         z: newPos.z,
         duration: 1,             
