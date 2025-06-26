@@ -1,5 +1,7 @@
 import { Raycaster, Vector2, Vector3 } from "three";
 import { gsap } from "gsap";
+import { getDescription } from "../../API/call";
+
 
 const mouse = new Vector2();
 const raycaster = new Raycaster();
@@ -16,9 +18,10 @@ export function rayCaster(camera, event, scene, controls) {
       const object = intersects[0].object;
 
       if (object.userData && object.userData.name) {
-         console.log("Clicked on:", object);
+        
          const objectWorldPosition = new Vector3();
          object.getWorldPosition(objectWorldPosition);
+         console.log(getDescription(object.name));
 
          const direction = new Vector3().subVectors(camera.position, objectWorldPosition).normalize();
 
