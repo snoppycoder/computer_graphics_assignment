@@ -27,6 +27,7 @@ class Loop {
   stop() {
     this.animate = false; 
   }
+
 }
 
 export { Loop };
