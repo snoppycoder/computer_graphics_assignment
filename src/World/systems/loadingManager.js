@@ -14,7 +14,7 @@ manager.onLoad = () => {
 
 manager.onProgress = (url, itemsLoaded, itemsTotal) => {
    manager.onProgress = (url, itemsLoaded, itemsTotal) => {
-      const percent = (itemsLoaded / itemsTotal) * 100;
+      const percent = Math.min(100, (itemsLoaded / itemsTotal) * 100);
       document.getElementById("num_items_loader_text").innerText = `Loading item ${itemsLoaded} / ${itemsTotal}`;
       document.getElementById("progress-bar-overall").style.width = `${percent}%`;
    };
