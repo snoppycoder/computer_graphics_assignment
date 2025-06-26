@@ -1,7 +1,8 @@
 import { PerspectiveCamera } from "three";
 
 function createCamera() {
-   const camera = new PerspectiveCamera(75, 0.1, 0.1, 15000);
+   const camera = new PerspectiveCamera(75, 0.1, 0.1, 25_000);
+   
    return camera;
 }
 

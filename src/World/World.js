@@ -8,6 +8,8 @@ import { createOrbitControls } from "./systems/orbitcontrols";
 import { createRenderer } from "./systems/renderer";
 import { resizer } from "./systems/resizer";
 
+
+
 let camera;
 let scene;
 let renderer;
@@ -18,9 +20,15 @@ class World {
       this.setup(container);
       // Adding the solar system
       const solarSystem = new SolarSystem();
+      
+      
+
       scene.add(solarSystem);
       loop.updatables.push(solarSystem);
+      
+     
    }
+   
 
    setup(container) {
       camera = createCamera();
@@ -28,6 +36,8 @@ class World {
       renderer = createRenderer();
       container.append(renderer.domElement);
       loop = new Loop(camera, renderer, scene);
+      const solarSystem = new SolarSystem();
+     
 
       // Setting up light from the Sun and ambient lighting
       this.lights = createLights();
@@ -40,11 +50,14 @@ class World {
       resizer(container, camera, renderer);
 
       // Setting up camera
-      camera.position.set(0, 0, 300);
+      camera.position.set(0, 900, 950);
       scene.add(camera);
 
-      window.addEventListener("click", (event) => {rayCaster(camera, event, scene, this.orbitControls)}, false);
+     renderer.domElement.addEventListener("click", (event) => {
+  rayCaster(camera, event, scene, this.orbitControls);
+});
    }
+
    start() {
       loop.start();
    }
