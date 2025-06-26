@@ -1,9 +1,10 @@
 import { EquirectangularReflectionMapping, Scene } from "three";
 import { RGBELoader } from "three/examples/jsm/Addons.js";
+import { manager } from "../systems/loadingManager";
 
 function createScene() {
    const scene = new Scene();
-   const loader = new RGBELoader();
+   const loader = new RGBELoader(manager);
 
    // Loads the background image into the scene
    loader.load(
@@ -13,11 +14,13 @@ function createScene() {
          scene.background = texture;
          scene.environment = texture;
       },
-      // (xhr) => {
-      //    // console.log(
-      //    //    // (xhr.loaded / xhr.total) * 100 + "% loaded"
-      //    // );
-      // }, 
+      (xhr) => {
+         if (xhr.lengthComputable) {
+            const percent = (xhr.loaded / xhr.total) * 100;
+            document.getElementById("loader_text").innerText = `Loading ${Math.floor(percent)}%`;
+            document.getElementById("progress-bar-individual").style.width = `${percent}%`;
+         }
+      },
       undefined,
       (error) => {
          console.log("An error occured while loading the HDR texture", error);

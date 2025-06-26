@@ -37,14 +37,12 @@ class SolarSystem extends Group {
 
       const sun = new CelestialBody("/assets/models/sun.glb", 0, 0, 0, 0, 0, "Sun", (body) => {
          this.add(body.planet);
-
-         // Compute scaleFactor using sun's bounding box
          const box = new Box3().setFromObject(body.planet);
          const size = new Vector3();
          box.getSize(size);
-         // console.log("Sun size:", size);
+         
          this.scaleFactor = size.x / 2 / SUN_RADIUS;
-         // sun.planet.scale.set(size.x*2, size.y*2, size.z*2);
+         
          
          // Mercury
          const mercury = new CelestialBody(
@@ -58,7 +56,7 @@ class SolarSystem extends Group {
                this.add(mercuryBody.planet);
                this.bodies.mercury = mercury;
                rescaleToRealRadius(mercuryBody.planet, 2.4397e6, sun.planet);
-              
+               
             }
          );
 
@@ -79,7 +77,7 @@ class SolarSystem extends Group {
                const box = new Box3().setFromObject(venusBody.planet);
                const size = new Vector3();
                box.getSize(size);
-              
+               
             }
          );
 
@@ -94,7 +92,7 @@ class SolarSystem extends Group {
                this.add(earthBody.planet);
                this.bodies.earth = earth;
                rescaleToRealRadius(earthBody.planet, 6.371e6, sun.planet);
-               
+            
             }
          );
          // Mars
@@ -109,7 +107,7 @@ class SolarSystem extends Group {
                this.add(marsBody.planet);
                this.bodies.mars = mars;
                rescaleToRealRadius(marsBody.planet, 3.3895e6, sun.planet);
-             
+            
             }
          );
 
@@ -130,80 +128,77 @@ class SolarSystem extends Group {
                jupiterBody.planet.getWorldPosition(jupiterPosition);
 
                //minor tweak to scale it better
-              
-            }
-         );
-         // Saturn
-         const saturn = new CelestialBody(
-            "/assets/models/saturn.glb",
-            (1.429e12 * this.scaleFactor) / reductionFactor,
-            (1.429e12 * this.scaleFactor) / reductionFactor,
-            929_596_728,
-            29_457,
-            26.73, "Saturn",
-            (saturnBody) => {
-               this.add(saturnBody.planet);
-               this.bodies.saturn = saturn;
-               rescaleToRealRadius(saturnBody.planet, 5.8232e7, sun.planet);
-              
-            }
-         );
-         // Uranus
-         const uranus = new CelestialBody(
-            "/assets/models/uranus.glb",
-            (2.871e12 * this.scaleFactor) / reductionFactor,
-            (2.871e12 * this.scaleFactor) / reductionFactor,
-            2_555_888_000,
-            -25_559, // retrograde rotation
-            97.77, "Uranus",
-            (uranusBody) => {
-               this.add(uranusBody.planet);
-               this.bodies.uranus = uranus;
-               rescaleToRealRadius(uranusBody.planet, 2.5362e7, sun.planet);
-             
-            }
-         );
-         // Neptune
-         const neptune = new CelestialBody(
-            "/assets/models/neptune.glb",
-            (4.495e12 * this.scaleFactor) / reductionFactor,
-            (4.495e12 * this.scaleFactor) / reductionFactor,
-            1_674_888_000,
-            24_865, // retrograde rotation
-            28.32, "Neptune",
-            (neptuneBody) => {
-               this.add(neptuneBody.planet);
-               this.bodies.neptune = neptune;
-               rescaleToRealRadius(neptuneBody.planet, 2.4622e7, sun.planet);
                
-            }
-         );
-         // Pluto
-         const pluto = new CelestialBody(
-            "/assets/models/pluto.glb",
-            (5.906e12 * this.scaleFactor) / reductionFactor,
-            (5.906e12 * this.scaleFactor) / reductionFactor,
-            7_885_000_000,
-            60_190, // retrograde rotation
-            122.53, "Pluto",
-            (plutoBody) => {
-               this.add(plutoBody.planet);
-               this.bodies.pluto = pluto;
-               rescaleToRealRadius(plutoBody.planet, 1.1883e6, sun.planet);
-             
+            });
+             // Saturn
+             const saturn = new CelestialBody(
+               "/assets/models/saturn.glb",
+               (1.433e12 * this.scaleFactor) / reductionFactor,
+               (1.433e12 * this.scaleFactor) / reductionFactor,
+               929_596_608,
+               38_484,
+               26.73, "Saturn",
+               (saturnBody) => {
+                  this.add(saturnBody.planet);
+                  this.bodies.saturn = saturn;
+                  rescaleToRealRadius(saturnBody.planet, 3.8232e7, sun.planet);
+               }
+             );
 
-              
-               
-            }
+             // Uranus
+             const uranus = new CelestialBody(
+               "/assets/models/uranus.glb",
+               (2.877e12 * this.scaleFactor) / reductionFactor,
+               (2.877e12 * this.scaleFactor) / reductionFactor,
+               2_651_370_304,
+               -62_064, // retrograde rotation
+               97.77, "Uranus",
+               (uranusBody) => {
+                  this.add(uranusBody.planet);
+                  this.bodies.uranus = uranus;
+                  rescaleToRealRadius(uranusBody.planet, 2.5362e7, sun.planet);
+               }
+             );
+
+             // Neptune
+             const neptune = new CelestialBody(
+               "/assets/models/neptune.glb",
+               (4.503e12 * this.scaleFactor) / reductionFactor,
+               (4.503e12 * this.scaleFactor) / reductionFactor,
+               5_200_418_560,
+               57_996,
+               28.32, "Neptune",
+               (neptuneBody) => {
+                  this.add(neptuneBody.planet);
+                  this.bodies.neptune = neptune;
+                  rescaleToRealRadius(neptuneBody.planet, 2.4622e7, sun.planet);
+               }
+             );
+
+             // Pluto (dwarf planet)
+             const pluto = new CelestialBody(
+               "/assets/models/pluto.glb",
+               (5.906e12 * this.scaleFactor) / reductionFactor,
+               (5.906e12 * this.scaleFactor) / reductionFactor,
+               7_818_432_640,
+               -551_856, // retrograde rotation
+               119.61, "Pluto",
+               (plutoBody) => {
+                  this.add(plutoBody.planet);
+                  this.bodies.pluto = pluto;
+                  rescaleToRealRadius(plutoBody.planet, 1.1883e6, sun.planet);
+               }
+             );
+            
             
 
-         );
-        
+             
 
+
+         this.bodies.sun = sun;
       });
-   
 
-      return this.bodies; 
+      return this.bodies; // even though incomplete initially, gets populated later
    }
 
    tick(delta) {

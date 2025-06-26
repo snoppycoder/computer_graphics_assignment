@@ -7,7 +7,7 @@ import { Loop } from "./systems/Loop";
 import { createOrbitControls } from "./systems/orbitcontrols";
 import { createRenderer } from "./systems/renderer";
 import { resizer } from "./systems/resizer";
-
+import * as THREE from "three";
 
 
 let camera;
@@ -19,16 +19,8 @@ class World {
    constructor(container) {
       this.setup(container);
       // Adding the solar system
-      const solarSystem = new SolarSystem();
       
-      
-
-      scene.add(solarSystem);
-      loop.updatables.push(solarSystem);
-      
-     
    }
-   
 
    setup(container) {
       camera = createCamera();
@@ -37,7 +29,8 @@ class World {
       container.append(renderer.domElement);
       loop = new Loop(camera, renderer, scene);
       const solarSystem = new SolarSystem();
-     
+      scene.add(solarSystem);
+      loop.updatables.push(solarSystem);
 
       // Setting up light from the Sun and ambient lighting
       this.lights = createLights();
@@ -48,14 +41,26 @@ class World {
       loop.updatables.push(this.orbitControls);
 
       resizer(container, camera, renderer);
-
+      
       // Setting up camera
-      camera.position.set(0, 900, 950);
+      camera.position.set(0, 500, 800);
       scene.add(camera);
 
-     renderer.domElement.addEventListener("click", (event) => {
-  rayCaster(camera, event, scene, this.orbitControls);
-});
+      renderer.domElement.addEventListener("click", (event) => {
+         rayCaster(camera, event, scene, this.orbitControls, renderer.domElement);
+      });
+      document.getElementById("discover-button").addEventListener("click", () => {
+         // const jupiterObj = scene.getObjectByName("Jupiter");
+         // console.log(jupiterObj)
+         // const jupiterWorldPos = new THREE.Vector3();
+         // jupiterObj.getWorldPosition(jupiterWorldPos);
+         // camera.lookAt(jupiterWorldPos);
+         document.getElementById("discover-button").style.display = "none";
+         
+         loop.stop();
+         
+      })
+   
    }
 
    start() {
