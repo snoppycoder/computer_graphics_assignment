@@ -74,4 +74,5 @@ span {
    height: 100%;
    width: 0%;
    background-color: #0f0;
+   border-radius: 5px;
 }
