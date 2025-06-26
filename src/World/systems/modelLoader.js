@@ -1,14 +1,15 @@
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
+import { manager } from "./loadingManager";
 
 function loadModel(url, name) {
-   const loader = new GLTFLoader();
+   const loader = new GLTFLoader(manager);
 
    return new Promise((resolve, reject) => {
       loader.load(
          url,
          (gltf) => {
             const model = gltf.scene;
-            model.traverse(( child ) => {
+            model.traverse((child) => {
                if (child.isMesh) {
                   child.name = name; // Set a name for the mesh
                }
