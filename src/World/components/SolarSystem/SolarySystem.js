@@ -23,7 +23,7 @@ class SolarSystem extends Group {
          box.getSize(size);
          this.scaleFactor = size.x / 2 / SUN_RADIUS;
 
-         // Mercury
+         // Mercury (2.4397e6 m)
          const mercury = new CelestialBody(
             "/assets/models/mercury.glb",
             (5.79e10 * this.scaleFactor) / reductionFactor,
@@ -33,33 +33,29 @@ class SolarSystem extends Group {
             0.034,
             "Mercury",
             (mercuryBody) => {
+               rescale(mercuryBody.planet, 2.4397e6, sun.planet);
                this.add(mercuryBody.planet);
                this.bodies.mercury = mercury;
-               rescale(mercuryBody.planet, sun.planet);
             }
          );
 
-         // Venus
+         // Venus (6.0518e6 m)
          const venus = new CelestialBody(
             "/assets/models/venus.glb",
             (1.082e11 * this.scaleFactor) / reductionFactor,
             (1.082e11 * this.scaleFactor) / reductionFactor,
             19_414_149,
-            -20_992, // retrograde rotation
+            -20_992,
             177.4,
             "Venus",
             (venusBody) => {
-               rescale(venusBody.planet, sun.planet);
-
-               // Res
+               rescale(venusBody.planet, 6.0518e6, sun.planet);
                this.add(venusBody.planet);
                this.bodies.venus = venus;
-               const box = new Box3().setFromObject(venusBody.planet);
-               const size = new Vector3();
-               box.getSize(size);
             }
          );
 
+         // Earth (6.371e6 m)
          const earth = new CelestialBody(
             "/assets/models/earth.glb",
             (1.496e11 * this.scaleFactor) / reductionFactor,
@@ -69,12 +65,13 @@ class SolarSystem extends Group {
             23.44,
             "Earth",
             (earthBody) => {
+               rescale(earthBody.planet, 6.371e6, sun.planet);
                this.add(earthBody.planet);
                this.bodies.earth = earth;
-               rescale(earthBody.planet, sun.planet);
             }
          );
-         // Mars
+
+         // Mars (3.3895e6 m)
          const mars = new CelestialBody(
             "/assets/models/mars.glb",
             (2.279e11 * this.scaleFactor) / reductionFactor,
@@ -84,33 +81,32 @@ class SolarSystem extends Group {
             25.19,
             "Mars",
             (marsBody) => {
+               rescale(marsBody.planet, 3.3895e6, sun.planet);
                this.add(marsBody.planet);
                this.bodies.mars = mars;
-               rescale(marsBody.planet, sun.planet);
             }
          );
 
-         // Jupiter
+         // Jupiter (6.9911e7 m)
          const jupiter = new CelestialBody(
             "/assets/models/jupiter.glb",
             (7.785e11 * this.scaleFactor) / reductionFactor,
             (7.785e11 * this.scaleFactor) / reductionFactor,
-
             374_335_776,
             35_730,
             3.13,
             "Jupiter",
             (jupiterBody) => {
+               rescale(jupiterBody.planet, 6.9911e7, sun.planet);
                this.add(jupiterBody.planet);
                this.bodies.jupiter = jupiter;
-               rescale(jupiterBody.planet, sun.planet);
             }
          );
 
          this.bodies.sun = sun;
       });
 
-      return this.bodies; // even though incomplete initially, gets populated later
+      return this.bodies;
    }
 
    tick(delta) {
