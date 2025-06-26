@@ -28,6 +28,7 @@ body {
    color: black;
 }
 
+
 #loader {
    position: absolute;
    top: 0;
@@ -74,4 +75,18 @@ span {
    height: 100%;
    width: 0%;
    background-color: #0f0;
+}
+#discover-button {
+   position: absolute;
+   bottom: 50px;
+   left: 50%;
+   transform: translateX(-50%);
+   padding: 15px 25px;
+   background-color: #00ff6e;
+   border:none;
+   border-radius: 5px;
+   
+   font-size:18pt;
+   font-weight: bold;
+   color: #fff;
 }
