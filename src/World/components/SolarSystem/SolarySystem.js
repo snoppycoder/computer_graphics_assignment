@@ -1,10 +1,9 @@
 import { Group } from "three";
 import { Box3, Vector3 } from "three";
 import { CelestialBody } from "./CelestialBody";
-import { rescaleToRealRadius } from "./rescale";
+import { rescale } from "./rescale";
 const SUN_RADIUS = 6.9634e8; // in meters
 const reductionFactor = 10;
-const multiplicationFactor = 3000000;
 
 class SolarSystem extends Group {
    constructor() {
@@ -22,9 +21,7 @@ class SolarSystem extends Group {
          const box = new Box3().setFromObject(body.planet);
          const size = new Vector3();
          box.getSize(size);
-         // console.log("Sun size:", size);
          this.scaleFactor = size.x / 2 / SUN_RADIUS;
-         // sun.planet.scale.set(size.x*2, size.y*2, size.z*2);
 
          // Mercury
          const mercury = new CelestialBody(
@@ -36,19 +33,9 @@ class SolarSystem extends Group {
             0.034,
             "Mercury",
             (mercuryBody) => {
-               rescaleToRealRadius(mercuryBody.planet, 2.4397e6, sun.planet);
                this.add(mercuryBody.planet);
                this.bodies.mercury = mercury;
-               // mercuryBody.planet.scale.set(
-               //    this.scaleFactor * multiplicationFactor,
-               //    this.scaleFactor * multiplicationFactor,
-               //    this.scaleFactor * multiplicationFactor
-               // );
-               const box = new Box3().setFromObject(mercuryBody.planet);
-               const size = new Vector3();
-               box.getSize(size);
-               console.log("Mercury size");
-               console.log(size);
+               rescale(mercuryBody.planet, sun.planet);
             }
          );
 
@@ -62,20 +49,14 @@ class SolarSystem extends Group {
             177.4,
             "Venus",
             (venusBody) => {
-               rescaleToRealRadius(venusBody.planet, 6.0518e6, sun.planet);
+               rescale(venusBody.planet, sun.planet);
+
+               // Res
                this.add(venusBody.planet);
                this.bodies.venus = venus;
                const box = new Box3().setFromObject(venusBody.planet);
                const size = new Vector3();
                box.getSize(size);
-               console.log("Venus size");
-               console.log(size);
-               // console.log("Venus size:", size);
-               // venusBody.planet.scale.set(
-               //    this.scaleFactor * multiplicationFactor,
-               //    this.scaleFactor * multiplicationFactor,
-               //    this.scaleFactor * multiplicationFactor
-               // );
             }
          );
 
@@ -88,19 +69,9 @@ class SolarSystem extends Group {
             23.44,
             "Earth",
             (earthBody) => {
-               rescaleToRealRadius(earthBody.planet, 6.371e6, sun.planet);
                this.add(earthBody.planet);
                this.bodies.earth = earth;
-               const box = new Box3().setFromObject(earthBody.planet);
-               const size = new Vector3();
-               box.getSize(size);
-               console.log("Earth size");
-               console.log(size);
-               // earthBody.planet.scale.set(
-               //    this.scaleFactor * multiplicationFactor,
-               //    this.scaleFactor * multiplicationFactor,
-               //    this.scaleFactor * multiplicationFactor
-               // );
+               rescale(earthBody.planet, sun.planet);
             }
          );
          // Mars
@@ -113,14 +84,9 @@ class SolarSystem extends Group {
             25.19,
             "Mars",
             (marsBody) => {
-               rescaleToRealRadius(marsBody.planet, 3.3895e6, sun.planet);
                this.add(marsBody.planet);
                this.bodies.mars = mars;
-               // marsBody.planet.scale.set(
-               //    this.scaleFactor * multiplicationFactor,
-               //    this.scaleFactor * multiplicationFactor,
-               //    this.scaleFactor * multiplicationFactor
-               // );
+               rescale(marsBody.planet, sun.planet);
             }
          );
 
@@ -135,15 +101,9 @@ class SolarSystem extends Group {
             3.13,
             "Jupiter",
             (jupiterBody) => {
-               rescaleToRealRadius(jupiterBody.planet, 3.9911e7, sun.planet);
                this.add(jupiterBody.planet);
                this.bodies.jupiter = jupiter;
-               //minor tweak to scale it better
-               // jupiterBody.planet.scale.set(
-               //    this.scaleFactor * multiplicationFactor,
-               //    this.scaleFactor * multiplicationFactor,
-               //    this.scaleFactor * multiplicationFactor
-               // );
+               rescale(jupiterBody.planet, sun.planet);
             }
          );
 

@@ -1,8 +1,8 @@
 import { Box3, Vector3 } from "three";
 
-export function rescaleToRealRadius(object3D, sun) {
+export function rescale(object3D, sun) {
    const SUN_RADIUS = 6.9634e8;
-   const multiplicationFactor = 1100000;
+   const multiplicationFactor = 1400000;
 
    const box = new Box3().setFromObject(sun);
    const size = new Vector3();
