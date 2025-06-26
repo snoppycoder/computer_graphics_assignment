@@ -28,7 +28,7 @@ class SolarSystem extends Group {
          
          // Mercury
          const mercury = new CelestialBody(
-            "../../../../assets/models/mercury.glb",
+            "/assets/models/mercury.glb",
             (5.79e10 * this.scaleFactor) / reductionFactor,
             (5.79e10 * this.scaleFactor) / reductionFactor,
             7_600_543,
@@ -48,7 +48,7 @@ class SolarSystem extends Group {
 
          // Venus
          const venus = new CelestialBody(
-            "../../../../assets/models/venus.glb",
+            "/assets/models/venus.glb",
             (1.082e11 * this.scaleFactor) / reductionFactor,
             (1.082e11 * this.scaleFactor) / reductionFactor,
             19_414_149,
@@ -73,7 +73,7 @@ class SolarSystem extends Group {
          );
 
          const earth = new CelestialBody(
-            "../../../../assets/models/earth.glb",
+            "/assets/models/earth.glb",
             (1.496e11 * this.scaleFactor) / reductionFactor,
             (1.496e11 * this.scaleFactor) / reductionFactor,
             31_557_600,
@@ -92,7 +92,7 @@ class SolarSystem extends Group {
          );
          // Mars
          const mars = new CelestialBody(
-            "../../../../assets/models/mars.glb",
+            "/assets/models/mars.glb",
             (2.279e11 * this.scaleFactor) / reductionFactor,
             (2.279e11 * this.scaleFactor) / reductionFactor,
             59_354_032,
@@ -112,7 +112,7 @@ class SolarSystem extends Group {
 
          // Jupiter
          const jupiter = new CelestialBody(
-            "../../../../assets/models/jupiter.glb",
+            "/assets/models/jupiter.glb",
             (7.785e11 * this.scaleFactor) / reductionFactor,
             (7.785e11 * this.scaleFactor) / reductionFactor,
           
