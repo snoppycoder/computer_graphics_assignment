@@ -8,7 +8,7 @@ function createScene() {
 
    // Loads the background image into the scene
    loader.load(
-      "../../../assets/hdri/background.hdr",
+      "/assets/hdri/background.hdr",
       (texture) => {
          texture.mapping = EquirectangularReflectionMapping;
          scene.background = texture;

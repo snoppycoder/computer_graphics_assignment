@@ -7,7 +7,8 @@ import { Loop } from "./systems/Loop";
 import { createOrbitControls } from "./systems/orbitcontrols";
 import { createRenderer } from "./systems/renderer";
 import { resizer } from "./systems/resizer";
-import * as THREE from "three";
+import {createEllipseOrbitLine} from "./components/SolarSystem/orbitLines.js"
+
 
 let camera;
 let scene;
@@ -17,6 +18,7 @@ let loop;
 class World {
    constructor(container) {
       this.setup(container);
+      
       // Adding the solar system
    }
 
@@ -47,14 +49,29 @@ class World {
       renderer.domElement.addEventListener("click", (event) => {
          rayCaster(camera, event, scene, this.orbitControls, loop);
       });
+         solarSystem.ready.then(() => {
+            const planetNames = [ "mercury", "venus", "earth", "mars", "jupiter", "saturn", 
+               "uranus", "neptune", "pluto"
+            ];
+
+            
+            for (const name of planetNames) {
+               const body = solarSystem.bodies[name];
+               if (!body || !body.a || !body.b) continue; // just incase
+               const orbit = createEllipseOrbitLine(body.a, body.b, 256);
+               scene.add(orbit);
+            }
+         });
+      //orbit
+      
+
+      
 
       document.getElementById("closeDrawerBtn").addEventListener("click", () => {
          document.getElementById("descriptionDrawer").style.transform = "translateX(100%)";
       });
       
       const slider = document.getElementById('speed-slider');
-
-
       const label =  document.querySelector('#speed-value');
       slider.addEventListener('input', (event) => {
          label.textContent = event.target.value;
@@ -66,11 +83,6 @@ class World {
 
       })
 
-      // document.getElementById("discover-button").addEventListener("click", () => {
-      //    document.getElementById("discover-button").style.display = "none";
-
-      //    loop.stop();
-      // });
    }
    start() {
       loop.start();

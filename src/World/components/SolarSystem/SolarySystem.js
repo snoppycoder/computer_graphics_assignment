@@ -4,14 +4,25 @@ import { CelestialBody } from "./CelestialBody";
 import {rescaleToRealRadius} from "./rescale";
 const SUN_RADIUS = 6.9634e8; // in meters
 const reductionFactor = 10;
-const multiplicationFactor = 3000000;
 
 class SolarSystem extends Group {
    constructor() {
       super();
+      this.totalBodies = 10;
+      this.loadedBodies = 0;
+      this.ready = new Promise((resolve) => {
+         this._resolveReady = resolve;
+      });
       this.bodies = this.createBodies();
       this.originalBodies = {};
    }
+  checkIfAllBodiesAreLoaded() {
+   this.loadedBodies++;
+   if (this.loadedBodies === this.totalBodies) {
+      this._resolveReady();
+   }
+}
+
 
    createBodies() {
       this.bodies = {}; // initialize container
@@ -22,7 +33,7 @@ class SolarSystem extends Group {
          const box = new Box3().setFromObject(body.planet);
          const size = new Vector3();
          box.getSize(size);
-         
+         this.checkIfAllBodiesAreLoaded(); 
          this.scaleFactor = size.x / 2 / SUN_RADIUS;
          
          
@@ -43,6 +54,7 @@ class SolarSystem extends Group {
                   rot: mercury.rotPeriod
                
                }
+                this.checkIfAllBodiesAreLoaded(); 
                
             }
          );
@@ -66,6 +78,7 @@ class SolarSystem extends Group {
                   rot: venus.rotPeriod
                
                }
+               this.checkIfAllBodiesAreLoaded(); 
 
             }
 
@@ -85,8 +98,8 @@ class SolarSystem extends Group {
                this.originalBodies['earth'] = {
                   rev: earth.revPeriod,
                   rot: earth.rotPeriod
-               
                }
+               this.checkIfAllBodiesAreLoaded(); 
             
             }
          );
@@ -105,8 +118,8 @@ class SolarSystem extends Group {
                this.originalBodies['mars'] = {
                   rev: mars.revPeriod,
                   rot: mars.rotPeriod
-               
                }
+               this.checkIfAllBodiesAreLoaded(); 
             
             }
          );
@@ -130,6 +143,7 @@ class SolarSystem extends Group {
                   rot: jupiter.rotPeriod
                
                }
+               this.checkIfAllBodiesAreLoaded(); 
                
             });
              // Saturn
@@ -149,7 +163,8 @@ class SolarSystem extends Group {
                   rot: saturn.rotPeriod
                
                }
-               }
+               this.checkIfAllBodiesAreLoaded(); 
+            }
              );
 
              // Uranus
@@ -169,7 +184,8 @@ class SolarSystem extends Group {
                   rot: uranus.rotPeriod
                
                }
-               }
+               this.checkIfAllBodiesAreLoaded(); 
+            }
              );
 
              // Neptune
@@ -189,7 +205,8 @@ class SolarSystem extends Group {
                   rot: neptune.rotPeriod
                
                }
-               }
+               this.checkIfAllBodiesAreLoaded(); 
+            }
              );
 
              // Pluto (dwarf planet)
@@ -209,18 +226,19 @@ class SolarSystem extends Group {
                   rot: pluto.rotPeriod
                
                }
-               }
+               this.checkIfAllBodiesAreLoaded(); 
+            }
              );
             
             
 
              
-
+         
 
          this.bodies.sun = sun;
       });
 
-      return this.bodies; // even though incomplete initially, gets populated later
+      return this.bodies;
    }
 
    tick(delta) {
@@ -239,7 +257,7 @@ class SolarSystem extends Group {
       if (!original) continue;
       body.revPeriod = original.rev / percentage;
       body.rotPeriod = original.rot / percentage;
-      console.log(original.rev, body.revPeriod);
+      
    }
 }
 
