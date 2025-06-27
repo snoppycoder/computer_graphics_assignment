@@ -51,12 +51,26 @@ class World {
       document.getElementById("closeDrawerBtn").addEventListener("click", () => {
          document.getElementById("descriptionDrawer").style.transform = "translateX(100%)";
       });
+      
+      const slider = document.getElementById('speed-slider');
 
-      document.getElementById("discover-button").addEventListener("click", () => {
-         document.getElementById("discover-button").style.display = "none";
 
-         loop.stop();
-      });
+      const label =  document.querySelector('#speed-value');
+      slider.addEventListener('input', (event) => {
+         label.textContent = event.target.value;
+         const raw = parseFloat(event.target.value);    
+         const normalized = raw / 100;                   
+
+         solarSystem.speedAdjustment(normalized);
+         
+
+      })
+
+      // document.getElementById("discover-button").addEventListener("click", () => {
+      //    document.getElementById("discover-button").style.display = "none";
+
+      //    loop.stop();
+      // });
    }
    start() {
       loop.start();

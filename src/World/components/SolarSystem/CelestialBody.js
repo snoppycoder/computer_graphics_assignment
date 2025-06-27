@@ -12,7 +12,6 @@ const earthRotPeriod = 86164; // Revolution period of the Earth in seconds
 class CelestialBody {
    constructor(url, a, b, revPeriod, rotPeriod, obliquity, name, onLoad ) {
       
-     
         loadModel(url, name).then((value) => {
 
          this.planet = value;
@@ -23,10 +22,10 @@ class CelestialBody {
       
       
       });
-      this.a = a; // Major axis distance
-      this.b = b; // Minor axis distance
-      this.rotPeriod = rotPeriod; // How long it takes to rotate on its axis in seconds
-      this.revPeriod = revPeriod; // How long it takes to orbit around the sun in seconds
+      this.a = a; 
+      this.b = b; 
+      this.rotPeriod = rotPeriod; 
+      this.revPeriod = revPeriod; 
       this.time = 0;
     
    }

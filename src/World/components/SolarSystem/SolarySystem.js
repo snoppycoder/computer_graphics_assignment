@@ -10,10 +10,12 @@ class SolarSystem extends Group {
    constructor() {
       super();
       this.bodies = this.createBodies();
+      this.originalBodies = {};
    }
 
    createBodies() {
       this.bodies = {}; // initialize container
+      
 
       const sun = new CelestialBody("/assets/models/sun.glb", 0, 0, 0, 0, 0, "sun", (body) => {
          this.add(body.planet);
@@ -36,6 +38,11 @@ class SolarSystem extends Group {
                this.add(mercuryBody.planet);
                this.bodies.mercury = mercury;
                rescaleToRealRadius(mercuryBody.planet, 2.4397e6, sun.planet);
+               this.originalBodies['mercury'] = {
+                  rev: mercury.revPeriod,
+                  rot: mercury.rotPeriod
+               
+               }
                
             }
          );
@@ -49,16 +56,19 @@ class SolarSystem extends Group {
             -20_992, // retrograde rotation
             177.4, "Venus",
             (venusBody) => {
-               rescaleToRealRadius(venusBody.planet, 6.0518e6, sun.planet);
                
                // Res
                this.add(venusBody.planet);
                this.bodies.venus = venus;
-               const box = new Box3().setFromObject(venusBody.planet);
-               const size = new Vector3();
-               box.getSize(size);
+               rescaleToRealRadius(venusBody.planet, 6.0518e6, sun.planet);
+               this.originalBodies['venus'] = {
+                  rev: venus.revPeriod,
+                  rot: venus.rotPeriod
                
+               }
+
             }
+
          );
 
          const earth = new CelestialBody(
@@ -72,6 +82,11 @@ class SolarSystem extends Group {
                this.add(earthBody.planet);
                this.bodies.earth = earth;
                rescaleToRealRadius(earthBody.planet, 6.371e6, sun.planet);
+               this.originalBodies['earth'] = {
+                  rev: earth.revPeriod,
+                  rot: earth.rotPeriod
+               
+               }
             
             }
          );
@@ -87,6 +102,11 @@ class SolarSystem extends Group {
                this.add(marsBody.planet);
                this.bodies.mars = mars;
                rescaleToRealRadius(marsBody.planet, 3.3895e6, sun.planet);
+               this.originalBodies['mars'] = {
+                  rev: mars.revPeriod,
+                  rot: mars.rotPeriod
+               
+               }
             
             }
          );
@@ -105,6 +125,11 @@ class SolarSystem extends Group {
                this.bodies.jupiter = jupiter;
                rescaleToRealRadius(jupiterBody.planet, 3.9911e7, sun.planet);
                //minor tweak to scale it better
+               this.originalBodies['jupiter'] = {
+                  rev: jupiter.revPeriod,
+                  rot: jupiter.rotPeriod
+               
+               }
                
             });
              // Saturn
@@ -119,6 +144,11 @@ class SolarSystem extends Group {
                   this.add(saturnBody.planet);
                   this.bodies.saturn = saturn;
                   rescaleToRealRadius(saturnBody.planet, 3.8232e7, sun.planet);
+                  this.originalBodies['saturn'] = {
+                  rev: saturn.revPeriod,
+                  rot: saturn.rotPeriod
+               
+               }
                }
              );
 
@@ -134,6 +164,11 @@ class SolarSystem extends Group {
                   this.add(uranusBody.planet);
                   this.bodies.uranus = uranus;
                   rescaleToRealRadius(uranusBody.planet, 2.5362e7, sun.planet);
+                  this.originalBodies['uranus'] = {
+                  rev: uranus.revPeriod,
+                  rot: uranus.rotPeriod
+               
+               }
                }
              );
 
@@ -149,6 +184,11 @@ class SolarSystem extends Group {
                   this.add(neptuneBody.planet);
                   this.bodies.neptune = neptune;
                   rescaleToRealRadius(neptuneBody.planet, 2.4622e7, sun.planet);
+                  this.originalBodies['neptune'] = {
+                  rev: neptune.revPeriod,
+                  rot: neptune.rotPeriod
+               
+               }
                }
              );
 
@@ -164,6 +204,11 @@ class SolarSystem extends Group {
                   this.add(plutoBody.planet);
                   this.bodies.pluto = pluto;
                   rescaleToRealRadius(plutoBody.planet, 1.1883e6, sun.planet);
+                  this.originalBodies['pluto'] = {
+                  rev: pluto.revPeriod,
+                  rot: pluto.rotPeriod
+               
+               }
                }
              );
             
@@ -183,6 +228,21 @@ class SolarSystem extends Group {
          body.tick(delta);
       }
    }
+   speedAdjustment(percentage) {
+ 
+    
+
+   for (const [name, body] of Object.entries(this.bodies)) {
+
+      const original = this.originalBodies[name];
+      
+      if (!original) continue;
+      body.revPeriod = original.rev / percentage;
+      body.rotPeriod = original.rot / percentage;
+      console.log(original.rev, body.revPeriod);
+   }
+}
+
 }
 
 export { SolarSystem };
