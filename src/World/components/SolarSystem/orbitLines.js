@@ -16,3 +16,4 @@ export function createEllipseOrbitLine(a, b, segments = 128, color = 0xffffff) {
 
   return ellipse;
 }
+

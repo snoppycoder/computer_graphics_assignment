@@ -31,10 +31,25 @@
       </div>
 
       <div id="scene_container"></div>
+     <div class="control">
+  <div class="speed-toggle-wrapper">
+    <label for="speed-slider" class="slider-label">
+      Speed <span id="speed-value">50</span>%
+    </label>
+    <input type="range" id="speed-slider" min="0" max="100" value="50" />
+   </div>
+
+   <div class="speed-toggle-wrapper">
+      <label for="toggle" class="label-orbit-toggle">Orbit toggle</label>
+      <label class="switch">
+         <input type="checkbox" id="toggle" checked />
+         <span class="slider round"></span>
+      </label>
+   </div>
+   </div>
+
+
       
-      <label for="speed-slider" class="slider-label">
-         Speed <span id="speed-value">50</span>%</label> 
-      <input type="range" id="speed-slider" min="0" max="100" value="50">
      
    </body>
 </html>
