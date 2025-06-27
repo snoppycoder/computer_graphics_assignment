@@ -9,7 +9,6 @@ import { createRenderer } from "./systems/renderer";
 import { resizer } from "./systems/resizer";
 import * as THREE from "three";
 
-
 let camera;
 let scene;
 let renderer;
@@ -19,7 +18,6 @@ class World {
    constructor(container) {
       this.setup(container);
       // Adding the solar system
-      
    }
 
    setup(container) {
@@ -41,28 +39,25 @@ class World {
       loop.updatables.push(this.orbitControls);
 
       resizer(container, camera, renderer);
-      
+
       // Setting up camera
       camera.position.set(0, 500, 800);
       scene.add(camera);
 
       renderer.domElement.addEventListener("click", (event) => {
-         rayCaster(camera, event, scene, this.orbitControls, renderer.domElement);
+         rayCaster(camera, event, scene, this.orbitControls, loop);
       });
-      document.getElementById("discover-button").addEventListener("click", () => {
-         // const jupiterObj = scene.getObjectByName("Jupiter");
-         // console.log(jupiterObj)
-         // const jupiterWorldPos = new THREE.Vector3();
-         // jupiterObj.getWorldPosition(jupiterWorldPos);
-         // camera.lookAt(jupiterWorldPos);
-         document.getElementById("discover-button").style.display = "none";
-         
-         loop.stop();
-         
-      })
-   
-   }
 
+      document.getElementById("closeDrawerBtn").addEventListener("click", () => {
+         document.getElementById("descriptionDrawer").style.transform = "translateX(100%)";
+      });
+
+      document.getElementById("discover-button").addEventListener("click", () => {
+         document.getElementById("discover-button").style.display = "none";
+
+         loop.stop();
+      });
+   }
    start() {
       loop.start();
    }
