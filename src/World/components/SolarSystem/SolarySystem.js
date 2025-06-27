@@ -3,7 +3,7 @@ import { Box3, Vector3 } from "three";
 import { CelestialBody } from "./CelestialBody";
 import { rescale } from "./rescale";
 const SUN_RADIUS = 6.9634e8; // in meters
-const reductionFactor = 10;
+const reductionFactor = 40;
 
 class SolarSystem extends Group {
    constructor() {
