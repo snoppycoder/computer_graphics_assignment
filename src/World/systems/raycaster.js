@@ -3,7 +3,6 @@ import { gsap } from "gsap";
 import { getDescription } from "../../API/call";
 import { descriptionDrawer } from "../../API/descriptionDrawer";
 
-
 const mouse = new Vector2();
 const raycaster = new Raycaster();
 
@@ -13,25 +12,28 @@ export function rayCaster(camera, event, scene, controls) {
 
    raycaster.setFromCamera(mouse, camera);
 
-   const intersects = raycaster.intersectObjects(scene.children, true);
+   const objectsWorthTracking = [];
+   for (const child of scene.children) {
+      if (child && child.isObject3D) {
+         objectsWorthTracking.push(child);
+      }
+   }
+   const intersects = raycaster.intersectObjects(objectsWorthTracking, true);
 
    if (intersects.length > 0) {
       const object = intersects[0].object;
 
       if (object.userData && object.userData.name) {
-        
          const objectWorldPosition = new Vector3();
          object.getWorldPosition(objectWorldPosition);
-         let description = '';
+         let description = "";
+
          getDescription(object.name).then((data) => {
             description = data;
             if (description && description.length > 0) {
-            descriptionDrawer(description, object.name)
-         }
+               descriptionDrawer(description, object.name);
+            }
          });
-         
-
-
 
          const direction = new Vector3().subVectors(camera.position, objectWorldPosition).normalize();
 
