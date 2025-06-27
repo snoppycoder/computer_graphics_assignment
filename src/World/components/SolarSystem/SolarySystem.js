@@ -11,31 +11,11 @@ class SolarSystem extends Group {
       super();
       this.bodies = this.createBodies();
    }
-   getTotalSize() {
-   const box = new Box3().setFromObject(this);
-   const size = new Vector3();
-   box.getSize(size);
-   return size; // this is a Vector3 representing width (x), height (y), depth (z)
-}
-
-   waitUntilReady() {
-   return new Promise((resolve) => {
-      const checkIfAllLoaded = () => {
-         const allLoaded = Object.values(this.bodies).every(body => body?.planet);
-         if (allLoaded) {
-            resolve(this);
-         } else {
-            setTimeout(checkIfAllLoaded, 100); // wait 100ms and check again
-         }
-      };
-      checkIfAllLoaded();
-   });
-}
 
    createBodies() {
       this.bodies = {}; // initialize container
 
-      const sun = new CelestialBody("/assets/models/sun.glb", 0, 0, 0, 0, 0, "Sun", (body) => {
+      const sun = new CelestialBody("/assets/models/sun.glb", 0, 0, 0, 0, 0, "sun", (body) => {
          this.add(body.planet);
          const box = new Box3().setFromObject(body.planet);
          const size = new Vector3();
@@ -124,9 +104,6 @@ class SolarSystem extends Group {
                this.add(jupiterBody.planet);
                this.bodies.jupiter = jupiter;
                rescaleToRealRadius(jupiterBody.planet, 3.9911e7, sun.planet);
-               const jupiterPosition = new Vector3();
-               jupiterBody.planet.getWorldPosition(jupiterPosition);
-
                //minor tweak to scale it better
                
             });
@@ -206,7 +183,6 @@ class SolarSystem extends Group {
          body.tick(delta);
       }
    }
-   
 }
 
 export { SolarSystem };
