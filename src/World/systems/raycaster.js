@@ -1,4 +1,4 @@
-import { Raycaster, Vector2, Vector3 } from "three";
+import { Box3, Raycaster, Vector2, Vector3 } from "three";
 import { gsap } from "gsap";
 import { getDescription } from "../../API/call";
 import { descriptionDrawer } from "../../API/descriptionDrawer";
@@ -35,9 +35,14 @@ export function rayCaster(camera, event, scene, controls) {
             }
          });
 
-         const direction = new Vector3().subVectors(camera.position, objectWorldPosition).normalize();
+         // Adjusting the distance by which to step back the camera according to the size of the planet in order to look at the planet more accurately
+         const box = new Box3().setFromObject(object);
+         const size = new Vector3();
+         box.getSize(size);
+         const bodyRadius = size.x / 2;
 
-         const newPos = objectWorldPosition.clone().add(direction.multiplyScalar(300)); // STEPPING AWAY TO LOOK AT THE OBJECT PROPERLY
+         const direction = new Vector3().subVectors(camera.position, objectWorldPosition).normalize(); // Getting which direction the camera should go to
+         const newPos = objectWorldPosition.clone().add(direction.multiplyScalar(bodyRadius * 2.5)); // Going to object and stepping away
          //tweeny deprecated or not available so i am using gsap to animate the camera position
          gsap.to(camera.position, {
             x: newPos.x,
