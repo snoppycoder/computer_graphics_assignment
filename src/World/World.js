@@ -58,10 +58,22 @@ class World {
             for (const name of planetNames) {
                const body = solarSystem.bodies[name];
                if (!body || !body.a || !body.b) continue; // just incase
-               const orbit = createEllipseOrbitLine(body.a, body.b, 256);
-               scene.add(orbit);
+               if (!scene.getObjectByName(`${name}orbit`)) {
+                  const orbit = createEllipseOrbitLine(body.a, body.b);
+                  orbit.name = name + "orbit"
+                  scene.add(orbit);
+
+               }
             }
          });
+            document.getElementById("toggle").addEventListener("change", (event) => {
+            scene.traverse((child) => {
+               if (child.name.endsWith("orbit")) {
+                  child.visible =  event.target.checked;;
+               }
+            });
+            });
+
       //orbit
       
 

@@ -75,37 +75,29 @@ span {
    background-color: #0f0;
    border-radius: 5px;
 }
-.slider-label {
-  position: absolute;
-  left: 50%;
-  bottom: 80px; 
-  transform: translateX(-50%);
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-weight: 600;
-  font-size: 1rem;
+label {
   color: #4caf50;
   user-select: none;
-  pointer-events: none;
+  font-size:0.9rem;
+  font-weight: bolder;
 }
+
 span, label{
    display: inline;
 
 }
 #speed-slider {
-  position: absolute;
-  left: 50%;
-  bottom: 50px;
-  transform: translateX(-50%);
   -webkit-appearance: none;
-  width: 300px;
-  height: 8px;
+  width: 250px;
+  height: 6px;
   background: linear-gradient(to right, #00f260, #0575e6);
-  border-radius: 50px;
+  border-radius: 40px;
   outline: none;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
   cursor: pointer;
   transition: background 0.3s ease;
 }
+
 
 /* Hover effect on track */
 #speed-slider:hover {
@@ -115,8 +107,8 @@ span, label{
 /* Chrome, Safari Thumb */
 #speed-slider::-webkit-slider-thumb {
   -webkit-appearance: none;
-  height: 22px;
-  width: 22px;
+  height: 18px;
+  width: 18px;
   background: #ffffff;
   border-radius: 50%;
   border: 3px solid #4caf50;
@@ -130,27 +122,10 @@ span, label{
   box-shadow: 0 0 12px rgba(76, 175, 80, 1);
 }
 
-/* Firefox Thumb */
-#speed-slider::-moz-range-thumb {
-  height: 22px;
-  width: 22px;
-  background: #ffffff;
-  border-radius: 50%;
-  border: 3px solid #4caf50;
-  box-shadow: 0 0 8px rgba(76, 175, 80, 0.8);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  cursor: pointer;
-}
-
-#speed-slider::-moz-range-thumb:hover {
-  transform: scale(1.2);
-  box-shadow: 0 0 12px rgba(76, 175, 80, 1);
-}
-
 
 #descriptionDrawer {
    position: fixed;
-   right: 0; /* Initially hidden off-screen */
+   right: 0; 
    top: 0;
    z-index: 1000;
    width: 350px;
@@ -192,4 +167,75 @@ span, label{
 
 #closeDrawerBtn:hover {
    color: #f00;
+}
+.label-orbit-toggle {
+   color:#00f260;
+
+}
+
+
+
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 40px;
+  height: 22px;
+}
+
+.slider {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  transition: 0.4s;
+  cursor: pointer;
+  border-radius: 22px;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;       
+  width: 18px;      
+  left: 2px;          
+  bottom: 2px;       
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:checked + .slider:before {
+  transform: translateX(18px); /* move knob right on toggle */
+}
+
+
+.control {
+  position: absolute;
+  bottom: 15px;
+  width:100%;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  justify-content:flex-start;
+  gap: 40px;
+  margin-left:15px;
+}
+
+.speed-toggle-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }

@@ -13,15 +13,7 @@ function createScene() {
          texture.mapping = EquirectangularReflectionMapping;
          scene.background = texture;
          scene.environment = texture;
-      },
-      (xhr) => {
-         if (xhr.lengthComputable) {
-            const percent = (xhr.loaded / xhr.total) * 100;
-            document.getElementById("loader_text").innerText = `Loading ${Math.floor(percent)}%`;
-            document.getElementById("progress-bar-individual").style.width = `${percent}%`;
-         }
-      },
-      undefined,
+      }, undefined,
       (error) => {
          console.log("An error occured while loading the HDR texture", error);
       }
