@@ -122,3 +122,19 @@ span {
    font-size: 20px;
    line-height: 1.5;
 }
+
+#closeDrawerBtn {
+   position: absolute;
+   top: 2%;
+   right: 5%;
+   background: transparent;
+   border: none;
+   font-size: 28px;
+   color: #fff;
+   cursor: pointer;
+   transition: color 0.2s;
+}
+
+#closeDrawerBtn:hover {
+   color: #f00;
+}

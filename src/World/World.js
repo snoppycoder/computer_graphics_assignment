@@ -47,12 +47,12 @@ class World {
       renderer.domElement.addEventListener("click", (event) => {
          rayCaster(camera, event, scene, this.orbitControls, loop);
       });
+
+      document.getElementById("closeDrawerBtn").addEventListener("click", () => {
+         document.getElementById("descriptionDrawer").style.transform = "translateX(100%)";
+      });
+
       document.getElementById("discover-button").addEventListener("click", () => {
-         // const jupiterObj = scene.getObjectByName("Jupiter");
-         // console.log(jupiterObj)
-         // const jupiterWorldPos = new THREE.Vector3();
-         // jupiterObj.getWorldPosition(jupiterWorldPos);
-         // camera.lookAt(jupiterWorldPos);
          document.getElementById("discover-button").style.display = "none";
 
          loop.stop();
