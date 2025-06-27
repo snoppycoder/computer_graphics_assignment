@@ -8,7 +8,7 @@ class Loop {
     this.renderer = renderer;
     this.scene = scene;
     this.updatables = [];
-    this.animate = true; // controls whether animation updates happen
+    this.animate = true; 
   }
 
   start() {

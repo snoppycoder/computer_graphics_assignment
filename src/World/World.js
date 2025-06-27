@@ -7,7 +7,8 @@ import { Loop } from "./systems/Loop";
 import { createOrbitControls } from "./systems/orbitcontrols";
 import { createRenderer } from "./systems/renderer";
 import { resizer } from "./systems/resizer";
-import {createEllipseOrbitLine} from "./components/SolarSystem/orbitLines.js"
+import {createEllipseOrbitLine} from "./components/SolarSystem/orbitLines.js";
+import { supernova } from "./simulation/supernova.js";
 
 
 let camera;
@@ -66,17 +67,16 @@ class World {
                }
             }
          });
-            document.getElementById("toggle").addEventListener("change", (event) => {
-            scene.traverse((child) => {
-               if (child.name.endsWith("orbit")) {
-                  child.visible =  event.target.checked;;
+         document.getElementById("toggle").addEventListener("change", (event) => {
+         scene.traverse((child) => {
+            if (child.name.endsWith("orbit")) {
+               child.visible =  event.target.checked;;
                }
             });
-            });
+         });
+        
 
-      //orbit
-      
-
+  
       
 
       document.getElementById("closeDrawerBtn").addEventListener("click", () => {
