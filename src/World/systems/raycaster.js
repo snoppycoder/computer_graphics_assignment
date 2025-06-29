@@ -63,9 +63,8 @@ export function rayCaster(camera, event, scene, controls, loop) {
                controls.target.copy(objectWorldPosition);
                controls.update();
             },
-         });
-         // controls.enabled = false;
-         camera.tick = (delta) => {
+            onComplete: () => {
+               camera.tick = (delta) => {
             const objectWorldPosition = new Vector3();
             object.getWorldPosition(objectWorldPosition);
 
@@ -77,6 +76,10 @@ export function rayCaster(camera, event, scene, controls, loop) {
             controls.update();
          };
           loop.updatables.push(camera);
+            }
+         });
+         // controls.enabled = false;
+         
       } else {
          console.log("Clicked on an object without a name");
       }

@@ -8,7 +8,7 @@ import { createOrbitControls } from "./systems/orbitcontrols";
 import { createRenderer } from "./systems/renderer";
 import { resizer } from "./systems/resizer";
 import {createEllipseOrbitLine} from "./components/SolarSystem/orbitLines.js";
-import { supernova } from "./simulation/supernova.js";
+
 
 
 let camera;
